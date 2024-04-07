@@ -23,10 +23,8 @@ public class MyFirstTestCase extends BaseTest {
 
     @Test
     public void getCheckOutUsingDirectBankTransfer() throws InterruptedException, IOException {
-        BillingAddress billingAddress=new BillingAddress();
-        InputStream is=getClass().getClassLoader().getResourceAsStream("myBillingAddress.json");
-        JacksonUtils.deserializeJson(is,billingAddress);
-        driver.get("https://askomdch.com/");
+        BillingAddress billingAddress=JacksonUtils.deserializeJson("myBillingAddress.json",BillingAddress.class);
+
         BillingAddress billingAddressDetails= new BillingAddress("Demo","Test","San Francisco","San Francisco","98121","test@gs1.com");
                 /*new BillingAddress();
         billingAddressDetails.setFirstName("Demo")

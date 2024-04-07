@@ -10,8 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class JacksonUtils {
-    public static BillingAddress deserializeJson(InputStream filePath, BillingAddress billingAddress) throws IOException {
+    public static <T> T deserializeJson(String fileName, Class<T> T) throws IOException {
+        InputStream is=JacksonUtils.class.getClassLoader().getResourceAsStream(fileName);
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(filePath,billingAddress.getClass());
+        return objectMapper.readValue(is,T);
     }
 }
