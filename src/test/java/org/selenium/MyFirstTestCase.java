@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.selenium.pom.base.BaseTest;
 import org.selenium.pom.objects.BillingAddress;
+import org.selenium.pom.objects.Product;
 import org.selenium.pom.pages.CartPage;
 import org.selenium.pom.pages.CheckOutPage;
 import org.selenium.pom.pages.HomePage;
@@ -24,8 +25,9 @@ public class MyFirstTestCase extends BaseTest {
     @Test
     public void getCheckOutUsingDirectBankTransfer() throws InterruptedException, IOException {
         BillingAddress billingAddress=JacksonUtils.deserializeJson("myBillingAddress.json",BillingAddress.class);
+        Product product= new Product(1251);
 
-        BillingAddress billingAddressDetails= new BillingAddress("Demo","Test","San Francisco","San Francisco","98121","test@gs1.com");
+//        BillingAddress billingAddressDetails= new BillingAddress("Demo","Test","San Francisco","San Francisco","98121","test@gs1.com");
                 /*new BillingAddress();
         billingAddressDetails.setFirstName("Demo")
                 .setLastName("Test").setAddressLine("San Francisco")
@@ -36,12 +38,12 @@ public class MyFirstTestCase extends BaseTest {
         .search("Blue");
 
         Assert.assertEquals(storePage.searchResult(),"Search results: “Blue”");
-        storePage.clickAddToCart("Blue Shoes");
+        storePage.clickAddToCart(product.getProductName());
         Thread.sleep(5000);
         CartPage cartPage = storePage.ClickViewCart();
-        Assert.assertEquals(cartPage.productName(),"Blue Shoes");
+        Assert.assertEquals(cartPage.productName(),product.getProductName());
         Thread.sleep(5000);
-        CheckOutPage checkOutPage=cartPage.checkOut().setBillingAddressDetails(billingAddressDetails)
+        CheckOutPage checkOutPage=cartPage.checkOut().setBillingAddressDetails(billingAddress)
                 .orderPlace();
 
         Thread.sleep(5000);
