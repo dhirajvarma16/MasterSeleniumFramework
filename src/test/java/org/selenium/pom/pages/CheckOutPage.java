@@ -2,6 +2,7 @@ package org.selenium.pom.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.selenium.pom.objects.BillingAddress;
 
 public class CheckOutPage extends basePage{
     private final By checkOutBtn= By.cssSelector(".checkout-button.button.alt.wc-forward");
@@ -81,8 +82,16 @@ public class CheckOutPage extends basePage{
     }
 
     public CheckOutPage fillUpUserDetails(String userName,String password){
-//        enterUserName(userName).enterPassword(password).clickLoginBtn();
         return enterUserName(userName).enterPassword(password).clickLoginBtn();
     }
 
+    public CheckOutPage setBillingAddressDetails(BillingAddress billingAddress){
+        return userNameFld(billingAddress.getFirstName()).
+                lastNameFld(billingAddress.getLastName()).
+                billingAddress(billingAddress.getAddressLine()).
+                billingCity(billingAddress.getCity()).
+                billingPostCode(billingAddress.getPostalCode()).
+                billingEmail(billingAddress.getEmail());
+
+    }
 }
