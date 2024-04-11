@@ -2,7 +2,14 @@ package org.selenium.pom.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.selenium.pom.objects.BillingAddress;
+import org.selenium.pom.objects.UserLogin;
+
+import java.time.Duration;
+import java.util.List;
 
 public class CheckOutPage extends basePage{
     private final By checkOutBtn= By.cssSelector(".checkout-button.button.alt.wc-forward");
@@ -20,69 +27,75 @@ public class CheckOutPage extends basePage{
 
     private final By loginBtn=By.cssSelector("button[value='Login']");
 
+    private final By orverlays=By.cssSelector(".blockUI.blockOverlay");
     public CheckOutPage(WebDriver driver) {
         super(driver);
     }
 
     public CheckOutPage checkOutBtn(){
         driver.findElement(checkOutBtn).click();
-        return new CheckOutPage(driver);
+        return this;
     }
     public CheckOutPage userNameFld(String name){
+        WebElement e= waitForElementToBeVisible(userNameFld);
+        e.sendKeys(name);
+        /*
         driver.findElement(userNameFld).sendKeys(name);
-        return new CheckOutPage(driver);
+       */
+        return this;
     }
 
     public CheckOutPage lastNameFld(String lastname){
-        driver.findElement(lastNameFld).sendKeys(lastname);
-        return new CheckOutPage(driver);
+        waitForElementToBeVisible(lastNameFld).sendKeys(lastname);
+        return this;
     }
 
     public CheckOutPage billingAddress(String billAddress){
-        driver.findElement(billingAddress).sendKeys(billAddress);
-        return new CheckOutPage(driver);
+        waitForElementToBeVisible(billingAddress).sendKeys(billAddress);
+        return this;
     }
     public CheckOutPage billingCity(String billCity){
-        driver.findElement(billingCity).sendKeys(billCity);
-        return new CheckOutPage(driver);
+        waitForElementToBeVisible(billingCity).sendKeys(billCity);
+        return this;
     }
 
     public CheckOutPage billingPostCode(String PostCode){
-        driver.findElement(billingPostCode).sendKeys(PostCode);
-        return new CheckOutPage(driver);
+        waitForElementToBeVisible(billingPostCode).sendKeys(PostCode);
+        return this;
     }
 
     public CheckOutPage billingEmail(String billEmail){
-        driver.findElement(billingEmail).sendKeys(billEmail);
-        return new CheckOutPage(driver);
+        waitForElementToBeVisible(billingEmail).sendKeys(billEmail);
+        return this;
     }
 
     public CheckOutPage orderPlace(){
-        driver.findElement(orderPlace).click();
-        return new CheckOutPage(driver);
+        waitForOverlaysToDisapper(orverlays);
+        waitForElementToBeVisible(orderPlace).click();
+        return this;
     }
 
     public String getNotice(){
-        return driver.findElement(noticeMsgLabel).getText();
+        return waitForElementToBeVisible(noticeMsgLabel).getText();
     }
 
     private CheckOutPage enterUserName(String userName1){
-        driver.findElement(userName).sendKeys(userName1);
-        return new CheckOutPage(driver);
+        waitForElementToBeVisible(userName).sendKeys(userName1);
+        return this;
     }
 
     private CheckOutPage enterPassword(String password){
-        driver.findElement(passWord).sendKeys(password);
-        return new CheckOutPage(driver);
+        waitForElementToBeVisible(passWord).sendKeys(password);
+        return this;
     }
 
     private CheckOutPage clickLoginBtn(){
-        driver.findElement(loginBtn).click();
-        return new CheckOutPage(driver);
+        waitForElementToBeVisible(loginBtn).click();
+        return this;
     }
 
-    public CheckOutPage fillUpUserDetails(String userName,String password){
-        return enterUserName(userName).enterPassword(password).clickLoginBtn();
+    public CheckOutPage fillUpUserDetails(UserLogin userLogin){
+        return enterUserName(userLogin.getUsername()).enterPassword(userLogin.getPassword()).clickLoginBtn();
     }
 
     public CheckOutPage setBillingAddressDetails(BillingAddress billingAddress){

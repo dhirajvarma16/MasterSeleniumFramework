@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.selenium.pom.base.BaseTest;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.objects.Product;
+import org.selenium.pom.objects.UserLogin;
 import org.selenium.pom.pages.CartPage;
 import org.selenium.pom.pages.CheckOutPage;
 import org.selenium.pom.pages.HomePage;
@@ -53,25 +54,28 @@ public class MyFirstTestCase extends BaseTest {
     }
 
     @Test
-    public void loginAndgetCheckOutUsingDirectBankTransfer() throws InterruptedException {
-        driver.get("https://askomdch.com/");
+    public void loginAndgetCheckOutUsingDirectBankTransfer() throws InterruptedException, IOException {
+        BillingAddress billingAddress=JacksonUtils.deserializeJson("myBillingAddress.json",BillingAddress.class);
+        Product product= new Product(1251);
+
         StorePage storePage=new HomePage(driver).load().navigateToStoreUsingMenu()
                 .search("Blue");
         Assert.assertEquals(storePage.searchResult(),"Search results: “Blue”");
-        storePage.clickAddToCart("Blue Shoes");
-        Thread.sleep(5000);
+        storePage.clickAddToCart(product.getProductName());
+
         CartPage cartPage = storePage.ClickViewCart();
-        Assert.assertEquals(cartPage.productName(),"Blue Shoes");
-        Thread.sleep(5000);
+        Assert.assertEquals(cartPage.productName(),product.getProductName());
+
         cartPage.checkOut();
         CheckOutPage checkOutPage=cartPage.clickUserLogin();
-        Thread.sleep(5000);
-        checkOutPage.fillUpUserDetails("demo2","test").userNameFld("demo2").lastNameFld("test")
-                .billingAddress("LTL").billingCity("Test Automation").
-                billingPostCode("12345").billingEmail("drvarma@gs.com")
+
+        UserLogin userLogin=JacksonUtils.deserializeJson("userLoginDetails.json",UserLogin.class);
+        userLogin.setUsername("demo2").setPassword("test");
+
+        checkOutPage.fillUpUserDetails(userLogin)
+                .setBillingAddressDetails(billingAddress)
                 .orderPlace();
 
-        Thread.sleep(5000);
         Assert.assertEquals(checkOutPage.getNotice(),"Thank you. Your order has been received.");
 
         driver.quit();

@@ -11,10 +11,10 @@ public class Product {
     public Product(int id) throws IOException {
         Product[] products=JacksonUtils.deserializeJson("products.json", Product[].class);
         for (Product product:products){
-            if (getId()==id)
+            if (product.getId()==id)
             {
-            this.id=id;
-            this.productName=product.getProductName();
+            this.setId(product.getId());
+            this.setProductName(product.getProductName());
             }
         }
     }
