@@ -1,21 +1,34 @@
 package org.selenium.pom.utils;
 
+import org.selenium.pom.constants.EnviromentType;
+
 import java.io.IOException;
 import java.util.Properties;
 
+import static org.selenium.pom.constants.EnviromentType.STAGE;
+
 public class ConfigLoader {
-    private final Properties properties;
+    private Properties properties;
     private static ConfigLoader configLoader;
 
     public ConfigLoader()  {
         try {
-            this.properties = PropertyUtils.propertyLoader("src/test/resources/config.properties");
+            String env= System.setProperty("env",String.valueOf(STAGE));
+            switch (EnviromentType.valueOf(env)) {
+                case STAGE:
+                    this.properties = PropertyUtils.propertyLoader("src/test/resources/stgprod_config.properties");
+                    break;
+                case PROD:
+                    this.properties= PropertyUtils.propertyLoader("src/test/resources/stg_config.properties");
+                    break;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ConfigLoader getConfigLoader(){
+
+    public static ConfigLoader getConfigLoader(){
         if (configLoader==null){
             configLoader=new ConfigLoader();
         }

@@ -70,5 +70,15 @@ public class StorePage extends basePage {
         viewCart.click();
         return new CartPage(driver);
     }
+
+    public StorePage load(){
+        load("/store");
+        return this;
+    }
+
+    public StorePage getSearchedURL(){
+        driver.getCurrentUrl();
+        return this;
+    }
 }
 

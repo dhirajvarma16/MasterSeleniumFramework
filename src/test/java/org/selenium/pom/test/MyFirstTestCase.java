@@ -11,6 +11,7 @@ import org.selenium.pom.pages.CartPage;
 import org.selenium.pom.pages.CheckOutPage;
 import org.selenium.pom.pages.HomePage;
 import org.selenium.pom.pages.StorePage;
+import org.selenium.pom.utils.ConfigLoader;
 import org.selenium.pom.utils.JacksonUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -62,7 +63,7 @@ public class MyFirstTestCase extends BaseTest {
         CheckOutPage checkOutPage=cartPage.clickUserLogin();
 
         UserLogin userLogin=JacksonUtils.deserializeJson("userLoginDetails.json",UserLogin.class);
-        userLogin.setUsername("demo2").setPassword("test");
+        userLogin.setUsername(ConfigLoader.getConfigLoader().getUsername()).setPassword(ConfigLoader.getConfigLoader().getPassword());
 
         checkOutPage.fillUpUserDetails(userLogin)
                 .setBillingAddressDetails(billingAddress)
