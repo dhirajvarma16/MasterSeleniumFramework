@@ -28,7 +28,7 @@ public class MyFirstTestCase extends BaseTest {
         BillingAddress billingAddress=JacksonUtils.deserializeJson("myBillingAddress.json",BillingAddress.class);
         Product product= new Product(1251);
 
-        StorePage storePage=new HomePage(driver).load().navigateToStoreUsingMenu();
+        StorePage storePage=new HomePage(getDriver()).load().navigateToStoreUsingMenu();
         storePage.isLoaded();
         storePage.search("Blue");
 
@@ -41,7 +41,7 @@ public class MyFirstTestCase extends BaseTest {
                 .orderPlace();
         Assert.assertEquals(checkOutPage.getNotice(),"Thank you. Your order has been received.");
 
-        driver.quit();
+        getDriver().quit();
     }
 
     @Test
@@ -49,7 +49,7 @@ public class MyFirstTestCase extends BaseTest {
         BillingAddress billingAddress=JacksonUtils.deserializeJson("myBillingAddress.json",BillingAddress.class);
         Product product= new Product(1251);
 
-        StorePage storePage=new HomePage(driver).load().navigateToStoreUsingMenu()
+        StorePage storePage=new HomePage(getDriver()).load().navigateToStoreUsingMenu()
                 .search("Blue");
         Assert.assertEquals(storePage.searchResult(),"Search results: “Blue”");
         storePage.clickAddToCart(product.getProductName());
@@ -70,7 +70,7 @@ public class MyFirstTestCase extends BaseTest {
 
         Assert.assertEquals(checkOutPage.getNotice(),"Thank you. Your order has been received.");
 
-        driver.quit();
+        getDriver().quit();
     }
 
 
