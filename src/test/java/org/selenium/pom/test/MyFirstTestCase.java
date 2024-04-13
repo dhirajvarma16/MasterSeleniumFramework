@@ -1,4 +1,4 @@
-package org.selenium;
+package org.selenium.pom.test;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -28,26 +28,17 @@ public class MyFirstTestCase extends BaseTest {
         BillingAddress billingAddress=JacksonUtils.deserializeJson("myBillingAddress.json",BillingAddress.class);
         Product product= new Product(1251);
 
-//        BillingAddress billingAddressDetails= new BillingAddress("Demo","Test","San Francisco","San Francisco","98121","test@gs1.com");
-                /*new BillingAddress();
-        billingAddressDetails.setFirstName("Demo")
-                .setLastName("Test").setAddressLine("San Francisco")
-                .setCity("San Francisco").setPostalCode("98121").setEmail("test@gs.com");*/
-
-
-        StorePage storePage=new HomePage(driver).load().navigateToStoreUsingMenu()
-        .search("Blue");
+        StorePage storePage=new HomePage(driver).load().navigateToStoreUsingMenu();
+        storePage.isLoaded();
+        storePage.search("Blue");
 
         Assert.assertEquals(storePage.searchResult(),"Search results: “Blue”");
+
         storePage.clickAddToCart(product.getProductName());
-        Thread.sleep(5000);
         CartPage cartPage = storePage.ClickViewCart();
         Assert.assertEquals(cartPage.productName(),product.getProductName());
-        Thread.sleep(5000);
         CheckOutPage checkOutPage=cartPage.checkOut().setBillingAddressDetails(billingAddress)
                 .orderPlace();
-
-        Thread.sleep(5000);
         Assert.assertEquals(checkOutPage.getNotice(),"Thank you. Your order has been received.");
 
         driver.quit();
@@ -64,6 +55,7 @@ public class MyFirstTestCase extends BaseTest {
         storePage.clickAddToCart(product.getProductName());
 
         CartPage cartPage = storePage.ClickViewCart();
+        cartPage.isLoaded();
         Assert.assertEquals(cartPage.productName(),product.getProductName());
 
         cartPage.checkOut();

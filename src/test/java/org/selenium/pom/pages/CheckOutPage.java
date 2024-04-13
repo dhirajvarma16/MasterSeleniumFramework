@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.objects.UserLogin;
@@ -28,6 +29,10 @@ public class CheckOutPage extends basePage{
     private final By loginBtn=By.cssSelector("button[value='Login']");
 
     private final By orverlays=By.cssSelector(".blockUI.blockOverlay");
+
+    private final By countryDropDown=By.cssSelector("#billing_country");
+    private final By stateElement=By.id("billing_state");
+    private final By paymentMode = By.xpath("");
     public CheckOutPage(WebDriver driver) {
         super(driver);
     }
@@ -98,12 +103,32 @@ public class CheckOutPage extends basePage{
         return enterUserName(userLogin.getUsername()).enterPassword(userLogin.getPassword()).clickLoginBtn();
     }
 
+    public CheckOutPage selectCountryValueFromDropDown(String countryName){
+        Select select= new Select(driver.findElement(countryDropDown));
+        select.selectByVisibleText(countryName);
+        return this;
+    }
+    public CheckOutPage selectStateValueFromDropDown(String stateName){
+        Select select= new Select(driver.findElement(stateElement));
+        select.selectByVisibleText(stateName);
+        return this;
+    }
+
+    public CheckOutPage selectPaymentmode(String billingMode){
+        By paymentMode=By.xpath("//label[contains(text(),'"+billingMode+"')]/preceding-sibling::input[@class='input-radio']");
+        waitForElementToBeVisible(paymentMode).click();
+        return this;
+    }
+
     public CheckOutPage setBillingAddressDetails(BillingAddress billingAddress){
         return userNameFld(billingAddress.getFirstName()).
                 lastNameFld(billingAddress.getLastName()).
+                selectCountryValueFromDropDown(billingAddress.getCountry()).
+                selectStateValueFromDropDown(billingAddress.getState()).
                 billingAddress(billingAddress.getAddressLine()).
                 billingCity(billingAddress.getCity()).
                 billingPostCode(billingAddress.getPostalCode()).
+                selectPaymentmode(billingAddress.getBilling()).
                 billingEmail(billingAddress.getEmail());
 
     }

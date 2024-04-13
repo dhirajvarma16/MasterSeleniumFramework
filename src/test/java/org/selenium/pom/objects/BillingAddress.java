@@ -7,17 +7,48 @@ public class BillingAddress {
     private String city;
     private String postalCode;
     private String email;
+    private String country;
+    private String state;
+    private String billing;
+
+
+    public String getBilling() {
+        return billing;
+    }
+
+    public void setBilling(String billing) {
+        this.billing = billing;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public BillingAddress() {
     }
 
-    public BillingAddress(String firstName, String lastName, String addressLine, String city, String postalCode, String email) {
+    public BillingAddress(String firstName, String lastName, String addressLine, String city, String postalCode, String email,String country,String state,String billing) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addressLine = addressLine;
         this.city = city;
         this.postalCode = postalCode;
         this.email = email;
+        this.country=country;
+        this.state=state;
+        this.billing=billing;
     }
 
     public String getFirstName() {

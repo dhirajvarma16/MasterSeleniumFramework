@@ -1,8 +1,11 @@
 {
   "firstName": "demo",
   "lastName": "user",
-  "addressLine": "San Francisco",
-  "city": "San Francisco",
-  "postalCode": "94188",
-  "email": "ask@gs.com"
+  "addressLine": "Thane",
+  "country": "India",
+  "state": "Maharashtra",
+  "city": "Thane",
+  "postalCode": "400410",
+  "email": "ask@gs.com",
+  "billing":"Cash on delivery"
 }

@@ -9,9 +9,15 @@ public class CartPage extends basePage {
     private final By productName = By.cssSelector("td[class='product-name']");
     private final By checkoutBtn = By.cssSelector(".checkout-button.button.alt.wc-forward");
     private final By userLogin= By.cssSelector(".showlogin");
+    private final By carHeading = By.cssSelector(".has-text-align-center");
+
 
     public CartPage(WebDriver driver) {
         super(driver);
+    }
+
+    public Boolean isLoaded(){
+       return waitLong.until(ExpectedConditions.textToBe(carHeading,"Cart"));
     }
 
     public String productName(){
