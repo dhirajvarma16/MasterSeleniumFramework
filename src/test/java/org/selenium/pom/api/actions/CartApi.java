@@ -17,6 +17,9 @@ public class CartApi {
         this.cookies = cookies;
     }
 
+    public CartApi() {
+    }
+
     public Cookies getCookies() {
         return cookies;
     }

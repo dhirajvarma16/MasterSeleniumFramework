@@ -6,14 +6,18 @@ import org.selenium.pom.utils.FakerUtils;
 public class DummyClass {
 
     public static void main(String[] args) {
-        String username="demouser2"+new FakerUtils().generateRandomNumber();
+        /*String username="demouser2"+new FakerUtils().generateRandomNumber();
         UserLogin userLogin=new UserLogin()
                 .setUsername("username")
                 .setPassword("demopwd").
                 setEmail(username+"@askomdh.com");
         SignUpApi signUpApi= new SignUpApi();
         System.out.println(signUpApi.register(userLogin));
-        System.out.println(signUpApi.getCookie());
+        System.out.println(signUpApi.getCookie());*/
+
+        CartApi cartApi=new CartApi();
+        cartApi.addToCart(1251,1);
+        System.out.println(cartApi.getCookies());
     }
 
 }
