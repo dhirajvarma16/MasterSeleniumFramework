@@ -16,7 +16,9 @@ public class CartTest extends BaseTest {
     @Test
      public void AddToCartTest() throws IOException {
         Product product= new Product(1251);
-        CartPage cartPage = storePage.ClickViewCart();
+
+        CartPage cartPage = new StorePage(getDriver()).load().
+                ClickViewCart();
         Assert.assertEquals(cartPage.productName(),product.getProductName());
      }
 

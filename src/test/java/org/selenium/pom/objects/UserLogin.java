@@ -3,6 +3,7 @@ package org.selenium.pom.objects;
 public class UserLogin {
     private String username;
     private String password;
+    private String email;
 
     public UserLogin(String username, String password) {
         this.username = username;
@@ -28,5 +29,14 @@ public class UserLogin {
     public UserLogin setPassword(String password) {
         this.password = password;
         return this;
+    }
+
+    public UserLogin setEmail(String email){
+        this.email=email;
+        return this;
+    }
+
+    public String getEmail(){
+        return email;
     }
 }
